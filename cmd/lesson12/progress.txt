@@ -1,7 +1,3 @@
-Geçer Notu hesaplayalım
-Commit Atalım
-Kod Düzenlemesi Yapalım
-Commit Atalım
 Her öğrencinin durumunu belirleyelim
 Commit Atalım
 Kod Düzenlemesi Yapalım

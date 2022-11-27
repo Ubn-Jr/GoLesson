@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 var (
 	harfNotlari      [9]string  = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 	harfSinirlari    [7]float32 = [7]float32{90, 80, 70, 60, 50, 40, 30}
@@ -25,22 +23,12 @@ var (
 )
 
 func main() {
-
 	for i := 0; i < 100; i++ {
-
 		ortalamaHesapla(i)
 		harfNotuHesapla(i)
-
 	}
-
-	var toplamNot float32 = 0
-	for i := 0; i < 100; i++ {
-		toplamNot += alinanNotlar[i]
-	}
-	toplamNot /= 100
-
-	fmt.Println(alinanHarfNotlari)
-
+	gecerNotHesapla()
+	ogrenciDurumuBelirle()
 }
 
 func ortalamaHesapla(ogrenciNo int) {
@@ -74,4 +62,24 @@ func harfNotuHesapla(ogrenciNo int) {
 		}
 	}
 	alinanHarfNotlari[ogrenciNo] = harfNotu
+}
+
+func gecerNotHesapla() {
+	var toplamNot float32 = 0
+	for i := 0; i < 100; i++ {
+		toplamNot += alinanNotlar[i]
+	}
+	gecerNot = toplamNot / 100
+}
+
+func ogrenciDurumuBelirle() {
+	for i := 0; i < 100; i++ {
+		if alinanNotlar[i] >= gecerNot {
+			ogrenciDurumlari[i] = "Geçti"
+			gecenOgrenciSayisi++
+		} else {
+			ogrenciDurumlari[i] = "Kaldı"
+			kalanOgrenciSayisi++
+		}
+	}
 }
