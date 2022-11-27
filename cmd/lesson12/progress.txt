@@ -1,6 +1,3 @@
-
-Kod Düzenlemesi Yapalım
-Commit Atalım
 Geçer Notu hesaplayalım
 Commit Atalım
 Kod Düzenlemesi Yapalım

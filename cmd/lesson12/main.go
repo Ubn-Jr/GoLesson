@@ -18,6 +18,7 @@ var (
 var (
 	alinanNotlar       [100]float32 = [100]float32{}
 	alinanHarfNotlari  [100]string  = [100]string{}
+	ogrenciDurumlari   [100]string  = [100]string{}
 	gecenOgrenciSayisi int          = 0
 	kalanOgrenciSayisi int          = 0
 	gecerNot           float32      = 0
@@ -31,6 +32,13 @@ func main() {
 		harfNotuHesapla(i)
 
 	}
+
+	var toplamNot float32 = 0
+	for i := 0; i < 100; i++ {
+		toplamNot += alinanNotlar[i]
+	}
+	toplamNot /= 100
+
 	fmt.Println(alinanHarfNotlari)
 
 }
