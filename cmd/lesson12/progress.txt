@@ -1,6 +1,3 @@
-
-Commit Atalım
-Her öğrencinin ortalamasını hesaplayalım
 Commit Atalım
 Kod Düzenlemesi Yapalım
 Commit Atalım

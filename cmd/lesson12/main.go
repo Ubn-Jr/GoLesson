@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 var (
 	harfNotlari      [9]string  = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 	harfSinirlari    [7]float32 = [7]float32{90, 80, 70, 60, 50, 40, 30}
@@ -22,6 +24,22 @@ var (
 )
 
 func main() {
+
+	for i := 0; i < 100; i++ {
+
+		vize1 := vize1Notlari[i]
+		vize2 := vize2Notlari[i]
+		final := finalNotlari[i]
+
+		vize1Agirlikli := vize1 * sinavAgirliklari[0] / 100
+		vize2Agirlikli := vize2 * sinavAgirliklari[1] / 100
+		finalAgirlikli := final * sinavAgirliklari[2] / 100
+
+		ogrenciNotu := vize1Agirlikli + vize2Agirlikli + finalAgirlikli
+		alinanNotlar[i] = ogrenciNotu
+
+	}
+	fmt.Println(alinanNotlar)
 
 }
 
