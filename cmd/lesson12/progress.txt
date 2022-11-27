@@ -1,5 +1,4 @@
-Commit Atalım
-Kod Düzenlemesi Yapalım
+
 Commit Atalım
 Öğrencinin Harf Notunu hesaplayalım
 Commit Atalım

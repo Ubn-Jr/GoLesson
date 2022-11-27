@@ -27,22 +27,24 @@ func main() {
 
 	for i := 0; i < 100; i++ {
 
-		vize1 := vize1Notlari[i]
-		vize2 := vize2Notlari[i]
-		final := finalNotlari[i]
-
-		vize1Agirlikli := vize1 * sinavAgirliklari[0] / 100
-		vize2Agirlikli := vize2 * sinavAgirliklari[1] / 100
-		finalAgirlikli := final * sinavAgirliklari[2] / 100
-
-		ogrenciNotu := vize1Agirlikli + vize2Agirlikli + finalAgirlikli
-		alinanNotlar[i] = ogrenciNotu
+		ortalamaHesapla(i)
 
 	}
 	fmt.Println(alinanNotlar)
 
 }
 
-func rastgele() {
+func ortalamaHesapla(ogrenciNo int) {
+
+	vize1 := vize1Notlari[ogrenciNo]
+	vize2 := vize2Notlari[ogrenciNo]
+	final := finalNotlari[ogrenciNo]
+
+	vize1Agirlikli := vize1 * sinavAgirliklari[0] / 100
+	vize2Agirlikli := vize2 * sinavAgirliklari[1] / 100
+	finalAgirlikli := final * sinavAgirliklari[2] / 100
+
+	ogrenciNotu := vize1Agirlikli + vize2Agirlikli + finalAgirlikli
+	alinanNotlar[ogrenciNo] = ogrenciNotu
 
 }
