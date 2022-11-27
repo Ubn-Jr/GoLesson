@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"strings"
+)
+
 var (
 	harfNotlari      [9]string  = [9]string{"AA", "BA", "BB", "CB", "CC", "DC", "DD", "FD", "FF"}
 	harfSinirlari    [7]float32 = [7]float32{90, 80, 70, 60, 50, 40, 30}
@@ -29,6 +34,23 @@ func main() {
 	}
 	gecerNotHesapla()
 	ogrenciDurumuBelirle()
+
+	fmt.Println(strings.Repeat("=", 100))
+	fmt.Println("Katılımcı Sayısı : 100")
+	fmt.Printf("Geçer Not : %f\n", gecerNot)
+	fmt.Printf("Geçen Öğrenci Sayısı : %d\n", gecenOgrenciSayisi)
+	fmt.Printf("Kalan Öğrenci Sayısı : %d\n", kalanOgrenciSayisi)
+	fmt.Println(strings.Repeat("=", 100))
+	fmt.Println("Öğrenci Bilgileri")
+	fmt.Println(strings.Repeat("=", 50))
+	for i := 0; i < 100; i++ {
+		fmt.Printf("Adı Soyadı : %s - Ortalama : %f - Harf Notu : %s - Durumu : %s\n",
+			katilanlar[i],
+			alinanNotlar[i],
+			alinanHarfNotlari[i],
+			ogrenciDurumlari[i])
+		fmt.Println(strings.Repeat("=", 25))
+	}
 }
 
 func ortalamaHesapla(ogrenciNo int) {

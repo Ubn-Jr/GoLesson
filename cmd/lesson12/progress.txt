@@ -1,15 +1,4 @@
-Her öğrencinin durumunu belirleyelim
-Commit Atalım
-Kod Düzenlemesi Yapalım
-Commit Atalım
-Geçen Öğrenci Sayısını bulalım
-Commit Atalım
-Kod Düzenlemesi Yapalım
-Commit Atalım
-Kalan Öğrenci Sayısını bulalım
-Commit Atalım
-Kod Düzenlemesi Yapalım
-Commit Atalım
+
 Rapor Oluşturalım
 Commit Atalım
 Kod Düzenlemesi Yapalım
