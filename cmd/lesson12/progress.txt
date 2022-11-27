@@ -1,0 +1,28 @@
+Her öğrencinin ortalamasını hesaplayalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Öğrencinin Harf Notunu hesaplayalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Geçer Notu hesaplayalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Her öğrencinin durumunu belirleyelim
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Geçen Öğrenci Sayısını bulalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Kalan Öğrenci Sayısını bulalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
+Rapor Oluşturalım
+Commit Atalım
+Kod Düzenlemesi Yapalım
+Commit Atalım
