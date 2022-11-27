@@ -28,31 +28,7 @@ func main() {
 	for i := 0; i < 100; i++ {
 
 		ortalamaHesapla(i)
-
-		ortalama := alinanNotlar[i]
-		harfNotu := ""
-
-		if finalNotlari[i] == -1 {
-			harfNotu = harfNotlari[8]
-		} else if ortalama >= harfSinirlari[0] {
-			harfNotu = harfNotlari[0]
-		} else if ortalama >= harfSinirlari[1] {
-			harfNotu = harfNotlari[1]
-		} else if ortalama >= harfSinirlari[2] {
-			harfNotu = harfNotlari[2]
-		} else if ortalama >= harfSinirlari[3] {
-			harfNotu = harfNotlari[3]
-		} else if ortalama >= harfSinirlari[4] {
-			harfNotu = harfNotlari[4]
-		} else if ortalama >= harfSinirlari[5] {
-			harfNotu = harfNotlari[5]
-		} else if ortalama >= harfSinirlari[6] {
-			harfNotu = harfNotlari[6]
-		} else {
-			harfNotu = harfNotlari[7]
-		}
-
-		alinanHarfNotlari[i] = harfNotu
+		harfNotuHesapla(i)
 
 	}
 	fmt.Println(alinanHarfNotlari)
@@ -72,4 +48,22 @@ func ortalamaHesapla(ogrenciNo int) {
 	ogrenciNotu := vize1Agirlikli + vize2Agirlikli + finalAgirlikli
 	alinanNotlar[ogrenciNo] = ogrenciNotu
 
+}
+
+func harfNotuHesapla(ogrenciNo int) {
+	ortalama := alinanNotlar[ogrenciNo]
+	harfNotu := ""
+	if finalNotlari[ogrenciNo] == -1 {
+		harfNotu = harfNotlari[8]
+	} else if ortalama < harfSinirlari[6] {
+		harfNotu = harfNotlari[7]
+	} else {
+		for i := 0; i < 7; i++ {
+			if ortalama >= harfSinirlari[i] {
+				harfNotu = harfNotlari[i]
+				break
+			}
+		}
+	}
+	alinanHarfNotlari[ogrenciNo] = harfNotu
 }
