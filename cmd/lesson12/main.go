@@ -29,8 +29,33 @@ func main() {
 
 		ortalamaHesapla(i)
 
+		ortalama := alinanNotlar[i]
+		harfNotu := ""
+
+		if finalNotlari[i] == -1 {
+			harfNotu = harfNotlari[8]
+		} else if ortalama >= harfSinirlari[0] {
+			harfNotu = harfNotlari[0]
+		} else if ortalama >= harfSinirlari[1] {
+			harfNotu = harfNotlari[1]
+		} else if ortalama >= harfSinirlari[2] {
+			harfNotu = harfNotlari[2]
+		} else if ortalama >= harfSinirlari[3] {
+			harfNotu = harfNotlari[3]
+		} else if ortalama >= harfSinirlari[4] {
+			harfNotu = harfNotlari[4]
+		} else if ortalama >= harfSinirlari[5] {
+			harfNotu = harfNotlari[5]
+		} else if ortalama >= harfSinirlari[6] {
+			harfNotu = harfNotlari[6]
+		} else {
+			harfNotu = harfNotlari[7]
+		}
+
+		alinanHarfNotlari[i] = harfNotu
+
 	}
-	fmt.Println(alinanNotlar)
+	fmt.Println(alinanHarfNotlari)
 
 }
 
