@@ -44,4 +44,9 @@ func main() {
 	fmt.Println(sayi1)
 	fmt.Println(sayi2)
 
+	var sayilar [5]int = [5]int{0, 0, 0, 0, 0}
+	fmt.Println("Kart Sayılarını Giriniz : ")
+	fmt.Scanf("%d %d %d %d %d", &sayilar[0], &sayilar[1], &sayilar[2], &sayilar[3], &sayilar[4])
+	fmt.Println(sayilar)
+
 }
