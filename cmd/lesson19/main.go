@@ -1,5 +1,7 @@
 package main
 
+// go build main.go
+
 import (
 	"errors"
 	"fmt"
