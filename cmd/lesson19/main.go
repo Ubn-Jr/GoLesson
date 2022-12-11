@@ -3,6 +3,7 @@ package main
 import (
 	"errors"
 	"fmt"
+	"strings"
 )
 
 var icecekler = []string{"AYRAN", "SU", "KOLA"}
@@ -10,11 +11,8 @@ var yanUrunler = []string{"PATATES", "TATLI"}
 var tostCesitleri = []string{"SADE", "KARISIK"}
 var pizzaCesitleri = []string{"SUCUKSEVER", "MARGARITA"}
 var burgerCesitleri = []string{"BIGMAC", "MCCHICKEN"}
-var tostMenu = []string{"TOST", "ICECEK", "YANURUN"}
-var pizzaMenu = []string{"PIZZA", "ICECEK", "YANURUN"}
-var burgerMenu = []string{"BURGER", "ICECEK", "YANURUN"}
 var siparisler = []string{"TOST", "PIZZA", "BURGER"}
-var fiyatlar map[string]float32 = map[string]float32{
+var fiyatlar map[string]float64 = map[string]float64{
 	"AYRAN":      2.50,
 	"SU":         1.50,
 	"KOLA":       3.50,
@@ -31,27 +29,46 @@ var fiyatlar map[string]float32 = map[string]float32{
 func main() {
 
 	fmt.Println("Ubn-Jr Restoran Sipariş Programına Hoşgeldiniz")
-	fmt.Println("Lütfen Siparişinizi Seçiniz :")
-	for i := 0; i < len(siparisler); i++ {
-		fmt.Println(i, siparisler[i])
-	}
-	var siparisNo int
-	var siparisAdi string = ""
-	fmt.Scanln(&siparisNo)
-	if (siparisNo < 0) || (siparisNo >= len(siparisler)) {
-		fmt.Println("Hatalı Giriş Yaptınız")
-		return
-	} else {
-		siparisAdi = siparisler[siparisNo]
-		fmt.Println("Siparişiniz : ", siparisAdi)
-	}
 
-	urunNo, urunAdi, err := urunCesitiSecimi(siparisAdi)
+	// Sipariş Seçimi
+	_, siparisAdi, err := listedenElemanAlma("Sipariş", siparisler)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	fmt.Println("Seçtiğiniz Ürün : ", urunNo, urunAdi)
+
+	// Ürün Seçimi
+	_, urunAdi, err := urunCesitiSecimi(siparisAdi)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// İçeçek Seçimi
+	_, icecekAdi, err := listedenElemanAlma("İçecek", icecekler)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	// Yan Ürün Seçimi
+	_, yanUrunAdi, err := listedenElemanAlma("Yan Ürün", yanUrunler)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	urunFiyati := fiyatlar[urunAdi]
+	yanUrunFiyati := fiyatlar[yanUrunAdi]
+	icecekFiyati := fiyatlar[icecekAdi]
+	toplamFiyat := urunFiyati + yanUrunFiyati + icecekFiyati
+	fmt.Println(strings.Repeat("=", 50))
+	fmt.Println("Seçtiğiniz Sipariş : ", siparisAdi)
+	fmt.Println("Seçtiğiniz Ürün : ", urunAdi)
+	fmt.Println("Seçtiğiniz İçecek : ", icecekAdi)
+	fmt.Println("Seçtiğiniz Yan Ürün : ", yanUrunAdi)
+	fmt.Println("Ödemeniz Gereken Tutar : ", toplamFiyat)
+	fmt.Println(strings.Repeat("=", 50))
 
 	// İÇECEKLER
 	// 1. AYRAN
@@ -99,33 +116,50 @@ func urunCesitiSecimi(siparisAdi string) (int, string, error) {
 
 	var err error
 
-	var secimYapilacakCsitler []string
+	var secimYapilacakCesitler []string
 	if siparisAdi == "TOST" {
-		secimYapilacakCsitler = tostCesitleri
+		secimYapilacakCesitler = tostCesitleri
 	} else if siparisAdi == "PIZZA" {
-		secimYapilacakCsitler = pizzaCesitleri
+		secimYapilacakCesitler = pizzaCesitleri
 	} else if siparisAdi == "BURGER" {
-		secimYapilacakCsitler = burgerCesitleri
+		secimYapilacakCesitler = burgerCesitleri
 	} else {
 		err = errors.New("Hatalı Giriş Yaptınız")
 		return 0, "", err
 	}
 
-	fmt.Println("Lütfen Bir Ürün Seçiniz :")
-	for i := 0; i < len(secimYapilacakCsitler); i++ {
-		fmt.Println(i, secimYapilacakCsitler[i])
+	urunNo, urunAdi, err := listedenElemanAlma("Ürün", secimYapilacakCesitler)
+
+	return urunNo, urunAdi, err
+
+}
+
+func listedenElemanAlma(mesajUrun string, secimYapilacakUrunler []string) (int, string, error) {
+	var err error
+	fmt.Println(strings.Repeat("=", 50))
+	fmt.Println("Lütfen Bir " + mesajUrun + " Seçiniz :")
+	fmt.Println(-1, "İPTAL")
+	for i := 0; i < len(secimYapilacakUrunler); i++ {
+		fmt.Println(i, secimYapilacakUrunler[i])
 	}
 
 	var urunNo int
 	var urunAdi string = ""
 	fmt.Scanln(&urunNo)
-	if (urunNo < 0) || (urunNo >= len(secimYapilacakCsitler)) {
-		err = errors.New("Hatalı Giriş Yaptınız")
+	if urunNo == -1 {
+		err = errors.New("Çıkış Yapıldı")
 		return 0, "", err
+	} else if (urunNo < 0) || (urunNo >= len(secimYapilacakUrunler)) {
+		//err = errors.New("Hatalı Giriş Yaptınız")
+		//return 0, "", err
+
+		//RECURSİVE FONKSİYON - ASLA KULLANMA
+		urunNo, urunAdi, err = listedenElemanAlma(mesajUrun, secimYapilacakUrunler)
+
 	} else {
-		urunAdi = secimYapilacakCsitler[urunNo]
+		urunAdi = secimYapilacakUrunler[urunNo]
+		fmt.Println("Seçtiğiniz "+mesajUrun+" : ", urunNo, urunAdi)
 	}
 
 	return urunNo, urunAdi, err
-
 }
