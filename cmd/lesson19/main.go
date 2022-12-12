@@ -8,12 +8,15 @@ import (
 	"strings"
 )
 
+var aktifDurum int = 0
+var durumlar []string = []string{"START", "MENU", "URUN", "ICECEK", "YANURUN", "ODEME", "END"}
+
 var icecekler = []string{"AYRAN", "SU", "KOLA"}
 var yanUrunler = []string{"PATATES", "TATLI"}
 var tostCesitleri = []string{"SADE", "KARISIK"}
 var pizzaCesitleri = []string{"SUCUKSEVER", "MARGARITA"}
 var burgerCesitleri = []string{"BIGMAC", "MCCHICKEN"}
-var siparisler = []string{"TOST", "PIZZA", "BURGER"}
+var menuler = []string{"TOST", "PIZZA", "BURGER"}
 var fiyatlar map[string]float64 = map[string]float64{
 	"AYRAN":      2.50,
 	"SU":         1.50,
@@ -28,49 +31,107 @@ var fiyatlar map[string]float64 = map[string]float64{
 	"MCCHICKEN":  13.00,
 }
 
+var (
+	menuAdi    string
+	urunAdi    string
+	icecekAdi  string
+	yanUrunAdi string
+)
+
 func main() {
+	var err error
+	var cikisYapildiMi bool
+	var ustMenuIslemi bool
+	for i := 0; i >= 0; i = i {
 
-	fmt.Println("Ubn-Jr Restoran Sipariş Programına Hoşgeldiniz")
+		if durumlar[aktifDurum] == "START" {
+			fmt.Println("Ubn-Jr Restoran Sipariş Programına Hoşgeldiniz")
+			aktifDurum = 1
+		} else if durumlar[aktifDurum] == "MENU" {
+			// Menü Seçimi
+			_, menuAdi, cikisYapildiMi, ustMenuIslemi, err = listedenElemanAlma("Menü", menuler)
+			if err != nil {
+				fmt.Println(err)
+				aktifDurum = 1
+			} else {
+				if cikisYapildiMi {
+					aktifDurum = 6
+				} else if ustMenuIslemi {
+					aktifDurum = 1
+				} else {
+					aktifDurum = 2
+				}
+			}
+		} else if durumlar[aktifDurum] == "URUN" {
+			// Ürün Seçimi
+			_, urunAdi, cikisYapildiMi, ustMenuIslemi, err = urunCesitiSecimi(menuAdi)
+			if err != nil {
+				fmt.Println(err)
+				aktifDurum = 2
+			} else {
+				if cikisYapildiMi {
+					aktifDurum = 6
+				} else if ustMenuIslemi {
+					aktifDurum = 1
+				} else {
+					aktifDurum = 3
+				}
+			}
+		} else if durumlar[aktifDurum] == "ICECEK" {
+			// İçeçek Seçimi
+			_, icecekAdi, cikisYapildiMi, ustMenuIslemi, err = listedenElemanAlma("İçecek", icecekler)
+			if err != nil {
+				fmt.Println(err)
+				aktifDurum = 3
+			} else {
+				if cikisYapildiMi {
+					aktifDurum = 6
+				} else if ustMenuIslemi {
+					aktifDurum = 2
+				} else {
+					aktifDurum = 4
+				}
+			}
+		} else if durumlar[aktifDurum] == "YANURUN" {
+			// Yan Ürün Seçimi
+			_, yanUrunAdi, cikisYapildiMi, ustMenuIslemi, err = listedenElemanAlma("Yan Ürün", yanUrunler)
+			if err != nil {
+				fmt.Println(err)
+				aktifDurum = 4
+			} else {
+				if cikisYapildiMi {
+					aktifDurum = 6
+				} else if ustMenuIslemi {
+					aktifDurum = 3
+				} else {
+					aktifDurum = 5
+				}
+			}
+		} else if durumlar[aktifDurum] == "ODEME" {
+			urunFiyati := fiyatlar[urunAdi]
+			yanUrunFiyati := fiyatlar[yanUrunAdi]
+			icecekFiyati := fiyatlar[icecekAdi]
+			toplamFiyat := urunFiyati + yanUrunFiyati + icecekFiyati
+			fmt.Println(strings.Repeat("=", 50))
+			fmt.Println("Seçtiğiniz Menü : ", menuAdi)
+			fmt.Println("Seçtiğiniz Ürün : ", urunAdi)
+			fmt.Println("Seçtiğiniz İçecek : ", icecekAdi)
+			fmt.Println("Seçtiğiniz Yan Ürün : ", yanUrunAdi)
+			fmt.Println("Ödemeniz Gereken Tutar : ", toplamFiyat)
+			fmt.Println(strings.Repeat("=", 50))
 
-	// Sipariş Seçimi
-	_, siparisAdi, err := listedenElemanAlma("Sipariş", siparisler)
-	if err != nil {
-		fmt.Println(err)
-		return
+			aktifDurum = 6
+		} else if durumlar[aktifDurum] == "END" {
+			fmt.Println("Gülegüle")
+			return
+		} else {
+			//Hata
+		}
+
 	}
 
-	// Ürün Seçimi
-	_, urunAdi, err := urunCesitiSecimi(siparisAdi)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// İçeçek Seçimi
-	_, icecekAdi, err := listedenElemanAlma("İçecek", icecekler)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// Yan Ürün Seçimi
-	_, yanUrunAdi, err := listedenElemanAlma("Yan Ürün", yanUrunler)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	urunFiyati := fiyatlar[urunAdi]
-	yanUrunFiyati := fiyatlar[yanUrunAdi]
-	icecekFiyati := fiyatlar[icecekAdi]
-	toplamFiyat := urunFiyati + yanUrunFiyati + icecekFiyati
-	fmt.Println(strings.Repeat("=", 50))
-	fmt.Println("Seçtiğiniz Sipariş : ", siparisAdi)
-	fmt.Println("Seçtiğiniz Ürün : ", urunAdi)
-	fmt.Println("Seçtiğiniz İçecek : ", icecekAdi)
-	fmt.Println("Seçtiğiniz Yan Ürün : ", yanUrunAdi)
-	fmt.Println("Ödemeniz Gereken Tutar : ", toplamFiyat)
-	fmt.Println(strings.Repeat("=", 50))
+	//switch
+	//iota
 
 	// İÇECEKLER
 	// 1. AYRAN
@@ -114,7 +175,7 @@ func main() {
 // urunAdi : Seçilen ürünün adı
 //
 // err : Hata durumunda döndürülen değer
-func urunCesitiSecimi(siparisAdi string) (int, string, error) {
+func urunCesitiSecimi(siparisAdi string) (int, string, bool, bool, error) {
 
 	var err error
 
@@ -127,19 +188,22 @@ func urunCesitiSecimi(siparisAdi string) (int, string, error) {
 		secimYapilacakCesitler = burgerCesitleri
 	} else {
 		err = errors.New("Hatalı Giriş Yaptınız")
-		return 0, "", err
+		return 0, "", false, false, err
 	}
 
-	urunNo, urunAdi, err := listedenElemanAlma("Ürün", secimYapilacakCesitler)
+	urunNo, urunAdi, cikisYapildiMi, ustMenuIslemi, err := listedenElemanAlma("Ürün", secimYapilacakCesitler)
 
-	return urunNo, urunAdi, err
+	return urunNo, urunAdi, cikisYapildiMi, ustMenuIslemi, err
 
 }
 
-func listedenElemanAlma(mesajUrun string, secimYapilacakUrunler []string) (int, string, error) {
+func listedenElemanAlma(mesajUrun string, secimYapilacakUrunler []string) (int, string, bool, bool, error) {
 	var err error
+	var cikisYapildiMi bool = false
+	var ustMenuIslemi bool = false
 	fmt.Println(strings.Repeat("=", 50))
 	fmt.Println("Lütfen Bir " + mesajUrun + " Seçiniz :")
+	fmt.Println(-2, "ÜST MENÜ")
 	fmt.Println(-1, "İPTAL")
 	for i := 0; i < len(secimYapilacakUrunler); i++ {
 		fmt.Println(i, secimYapilacakUrunler[i])
@@ -149,19 +213,20 @@ func listedenElemanAlma(mesajUrun string, secimYapilacakUrunler []string) (int, 
 	var urunAdi string = ""
 	fmt.Scanln(&urunNo)
 	if urunNo == -1 {
-		err = errors.New("Çıkış Yapıldı")
-		return 0, "", err
+		cikisYapildiMi = true
+		return 0, "", cikisYapildiMi, ustMenuIslemi, err
+	} else if urunNo == -2 {
+		ustMenuIslemi = true
+		return 0, "", cikisYapildiMi, ustMenuIslemi, err
 	} else if (urunNo < 0) || (urunNo >= len(secimYapilacakUrunler)) {
-		//err = errors.New("Hatalı Giriş Yaptınız")
-		//return 0, "", err
-
+		err = errors.New("Hatalı Giriş Yaptınız")
+		return 0, "", cikisYapildiMi, ustMenuIslemi, err
 		//RECURSİVE FONKSİYON - ASLA KULLANMA
-		urunNo, urunAdi, err = listedenElemanAlma(mesajUrun, secimYapilacakUrunler)
-
+		//urunNo, urunAdi, err = listedenElemanAlma(mesajUrun, secimYapilacakUrunler
 	} else {
 		urunAdi = secimYapilacakUrunler[urunNo]
 		fmt.Println("Seçtiğiniz "+mesajUrun+" : ", urunNo, urunAdi)
 	}
 
-	return urunNo, urunAdi, err
+	return urunNo, urunAdi, cikisYapildiMi, ustMenuIslemi, err
 }
