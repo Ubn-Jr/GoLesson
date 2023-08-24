@@ -40,11 +40,11 @@ func main() {
 
 	for {
 
-		fmt.Scanf("%s", &ogr1.Adi)
-		fmt.Scanf("%d", &ogr1.Yasi)
-		fmt.Scanf("%s", &ogr1.OkulAdi)
-		fmt.Scanf("%d", &ogr1.SinifNo)
-		fmt.Scanf("%f", &ogr1.Ortalama)
+		fmt.Scanf("%s\n", &ogr1.Adi)
+		fmt.Scanf("%d\n", &ogr1.Yasi)
+		fmt.Scanf("%s\n", &ogr1.OkulAdi)
+		fmt.Scanf("%d\n", &ogr1.SinifNo)
+		fmt.Scanf("%f\n", &ogr1.Ortalama)
 
 		fmt.Println(ogr1)
 	}
