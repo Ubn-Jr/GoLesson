@@ -28,9 +28,9 @@ func main() {
 	oyuncu1Hamle := 0
 	oyuncu2Hamle := 0
 	fmt.Println("Oyuncu 1 Kart Seçimi :")
-	fmt.Scanf("%d", &oyuncu1Hamle)
+	fmt.Scanf("%d\n", &oyuncu1Hamle)
 	fmt.Println("Oyuncu 2 Kart Seçimi :")
-	fmt.Scanf("%d", &oyuncu2Hamle)
+	fmt.Scanf("%d\n", &oyuncu2Hamle)
 
 	fmt.Printf("Oyuncu 1 Atılan Zar : %d\n", oyuncu1Hamle)
 	fmt.Printf("Oyuncu 2 Atılan Zar : %d\n", oyuncu2Hamle)
